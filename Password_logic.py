@@ -1,21 +1,27 @@
-import pyperclip
+def symbol_check(password):
+    length = len(password)
+    number_of_symbols = 0
+    for item in password:
+        if item.isupper() == False and item.islower() == False:
+            number_of_symbols += 1
+    result = ((5 * float(number_of_symbols / length)))
+    result = result % 5
+    return (5 * result) % 5
 
-def add_to_clipboard(text):
-    pyperclip.copy(text)
-    return
 
-def length_check(length): ## It takes over a centurie to crack a password over the length of 16 characters
-    pass_standard = 16
-    if length > pass_standard:
+def length_check(password):
+    recomended_length = 16
+    if len(password) >= recomended_length:
         return 5
-    return float((5 * (length / pass_standard)))
-
+    else:
+        return 5 * (len(password) / 16)
 
 def upper_case_check(password):
     number_of_symbols = 0
     for symbol in password:
         if symbol.isupper() == False and symbol.islower() == False:
             number_of_symbols += 1
+            
     length = (len(password) - number_of_symbols)
     upper_case = 0
     lower_case = 0
@@ -24,19 +30,21 @@ def upper_case_check(password):
             upper_case += 1
         elif item.islower():
             lower_case += 1
+
+    result = ((5 * float(upper_case / (length))))
+
     if upper_case > lower_case:
         numb = upper_case - lower_case
-        result = 5 - ((5 * float(upper_case / (length))) * (numb / upper_case))
+        result = 5 - ((5 * float(upper_case / (length))) * (numb / upper_case)) 
         return result
-    return ((5 * float(upper_case / (length)))) * 2
+    return result * 2
 
 
 def main():
-    ### Password length has to be greater than 0
-    ### Make nemonic genarator
-    password = "AAAaaa"
+    #implement early policy checking
+    password = "9@97eMZB!v2Y@i"
     print(upper_case_check(password))
-    print(length_check(len(password)))
-
+    print(length_check(password))
+    print(symbol_check(password))
 if __name__ == "__main__":
     main()
